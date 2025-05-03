@@ -1,5 +1,7 @@
 using Xunit;
 using KataCheckout.Interfaces;
+using KataCheckout.Services;
+
 
 namespace KataCheckout.Tests
 {
