@@ -47,7 +47,7 @@ namespace KataCheckout.Tests
         [Fact]
         public void WhenThreeItemsAScanned_SpecialPriceApplied()
         {
-            var checkout = new Checkout();
+            var checkout = Checkout.CreateWithSpecialOffers();
 
             checkout.Scan("A");
             checkout.Scan("A");
