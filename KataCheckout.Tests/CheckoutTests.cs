@@ -29,12 +29,12 @@ namespace KataCheckout.Tests
         public void WhenMultipleItemsScanned_TotalPriceIsSum()
         {
             var pricingRules = new Dictionary<string, int>
-            {
-                { "A", 50 },
-                { "B", 30 },
-                { "C", 20 },
-                { "D", 15 }
-            };
+    {
+        { "A", 50 },
+        { "B", 30 },
+        { "C", 20 },
+        { "D", 15 }
+    };
             ICheckout checkout = new Checkout(pricingRules);
 
             checkout.Scan("A");
