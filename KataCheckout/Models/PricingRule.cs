@@ -5,19 +5,14 @@ namespace KataCheckout.Models;
 /// <summary>
 /// Represents a pricing rule for a product
 /// </summary>
-public class PricingRule : IPricingRule
+/// <remarks>
+/// Initializes a new instance of the PricingRule class
+/// </remarks>
+/// <param name="sku">The SKU of the product</param>
+/// <param name="unitPrice">The unit price of the product</param>
+public class PricingRule(string sku, int unitPrice) : IPricingRule
 {
-    /// <summary>
-    /// Initializes a new instance of the PricingRule class
-    /// </summary>
-    /// <param name="sku">The SKU of the product</param>
-    /// <param name="unitPrice">The unit price of the product</param>
-    public PricingRule(string sku, int unitPrice)
-    {
-        SKU = sku;
-        UnitPrice = unitPrice;
-    }
-    
+
     /// <summary>
     /// Initializes a new instance of the PricingRule class with a special offer
     /// </summary>
@@ -25,6 +20,10 @@ public class PricingRule : IPricingRule
     /// <param name="unitPrice">The unit price of the product</param>
     /// <param name="specialQuantity">The quantity required for the special offer</param>
     /// <param name="specialPrice">The special offer price</param>
+    /// <remarks>
+/// This constructor creates a pricing rule with both a unit price and a special offer.
+/// For example, to create "3 items for 130" offer, use specialQuantity=3 and specialPrice=130.
+/// </remarks>
     public PricingRule(string sku, int unitPrice, int specialQuantity, int specialPrice) 
         : this(sku, unitPrice)
     {
@@ -34,17 +33,17 @@ public class PricingRule : IPricingRule
             OfferPrice = specialPrice
         };
     }
-    
+
     /// <summary>
     /// The Stock Keeping Unit (SKU) identifier for the product
     /// </summary>
-    public string SKU { get; }
-    
+    public string SKU { get; } = sku;
+
     /// <summary>
     /// The unit price of the product
     /// </summary>
-    public int UnitPrice { get; }
-    
+    public int UnitPrice { get; } = unitPrice;
+
     /// <summary>
     /// The special offer for the product, if any
     /// </summary>

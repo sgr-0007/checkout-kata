@@ -7,33 +7,20 @@ namespace KataCheckout.Services;
 /// <summary>
 /// Implements the checkout process with pricing rules
 /// </summary>
-public class Checkout : ICheckout
+/// <remarks>
+/// Initializes a new instance of the Checkout class with the specified pricing rule provider
+/// </remarks>
+/// <param name="pricingRuleProvider">The pricing rule provider</param>
+public class Checkout(IPricingRuleProvider pricingRuleProvider) : ICheckout
 {
-    private readonly IPricingRuleProvider _pricingRuleProvider;
+    private readonly IPricingRuleProvider _pricingRuleProvider = pricingRuleProvider ?? throw new ArgumentNullException(nameof(pricingRuleProvider));
     private readonly Dictionary<string, int> _scannedItems = [];
-    
-    /// <summary>
-    /// Initializes a new instance of the Checkout class with the specified pricing rule provider
-    /// </summary>
-    /// <param name="pricingRuleProvider">The pricing rule provider (optional)</param>
-    public Checkout(IPricingRuleProvider? pricingRuleProvider = null)
-    {
-        _pricingRuleProvider = pricingRuleProvider ?? new PricingRuleProvider(Enumerable.Empty<IPricingRule>());
-    }
-    
-    /// <summary>
-    /// Creates a checkout with the specified pricing rules
-    /// </summary>
-    /// <param name="pricingRules">Collection of pricing rules</param>
-    /// <returns>A new checkout instance</returns>
-    public static Checkout WithPricingRules(IEnumerable<IPricingRule> pricingRules)
-    {
-        return new Checkout(new PricingRuleProvider(pricingRules));
-    }
-    
 
-    
-        public void Scan(string item)
+    /// <summary>
+    /// Scans an item and updates the total price
+    /// </summary>
+    /// <param name="item">The item to scan</param>
+    public void Scan(string item)
         {
             if (string.IsNullOrWhiteSpace(item))
                 return;
@@ -47,6 +34,10 @@ public class Checkout : ICheckout
             _scannedItems[item] = ++value;
         }
 
+        /// <summary>
+        /// Gets the total price of all scanned items
+        /// </summary>
+        /// <returns>The total price</returns>
         public int GetTotalPrice()
         {
             int totalPrice = 0;

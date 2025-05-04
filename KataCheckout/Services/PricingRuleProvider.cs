@@ -5,19 +5,14 @@ namespace KataCheckout.Services;
 /// <summary>
 /// Provides access to pricing rules by SKU
 /// </summary>
-public class PricingRuleProvider : IPricingRuleProvider
+/// <remarks>
+/// Initializes a new instance of the PricingRuleProvider class
+/// </remarks>
+/// <param name="pricingRules">Collection of pricing rules</param>
+public class PricingRuleProvider(IEnumerable<IPricingRule> pricingRules) : IPricingRuleProvider
 {
-    private readonly Dictionary<string, IPricingRule> _pricingRules;
-    
-    /// <summary>
-    /// Initializes a new instance of the PricingRuleProvider class
-    /// </summary>
-    /// <param name="pricingRules">Collection of pricing rules</param>
-    public PricingRuleProvider(IEnumerable<IPricingRule> pricingRules)
-    {
-        _pricingRules = pricingRules?.ToDictionary(rule => rule.SKU) ?? [];
-    }
-    
+    private readonly Dictionary<string, IPricingRule> _pricingRules = pricingRules?.ToDictionary(rule => rule.SKU) ?? [];
+
     /// <summary>
     /// Gets the pricing rule for a specific SKU
     /// </summary>
