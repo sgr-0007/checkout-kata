@@ -1,6 +1,5 @@
 using KataCheckout.Interfaces;
 using KataCheckout.Models;
-using System.Collections.Generic;
 
 namespace KataCheckout.Tests.TestData
 {
@@ -14,13 +13,13 @@ namespace KataCheckout.Tests.TestData
         /// </summary>
         public static List<IPricingRule> GetStandardPricingRules()
         {
-            return new List<IPricingRule>
-            {
+            return
+            [
                 new PricingRule("A", 50, 3, 130),
                 new PricingRule("B", 30, 2, 45),
                 new PricingRule("C", 20),
                 new PricingRule("D", 15)
-            };
+            ];
         }
     }
 }

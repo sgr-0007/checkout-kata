@@ -1,6 +1,4 @@
-using System;
 using KataCheckout.Interfaces;
-using KataCheckout.Models;
 
 namespace KataCheckout.Services;
 

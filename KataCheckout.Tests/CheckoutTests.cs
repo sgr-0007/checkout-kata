@@ -1,6 +1,4 @@
-using Xunit;
 using KataCheckout.Interfaces;
-using KataCheckout.Services;
 using KataCheckout.Tests.TestData;
 using KataCheckout.Tests.TestHelpers;
 using Microsoft.Extensions.DependencyInjection;
@@ -105,6 +103,27 @@ namespace KataCheckout.Tests
             
             // Assert
             Assert.Equal(210, totalPrice); // 130 (3A) + 45 (2B) + 20 (C) + 15 (D) = 210
+        }
+
+        [Fact]
+        public void WhenMultipleSpecialOffersApplied_CorrectTotalPriceCalculated()
+        {
+            // Arrange - Get checkout from DI container with standard pricing rules
+            var serviceProvider = TestServiceProvider.CreateProvider(PricingRuleTestData.GetStandardPricingRules());
+            var checkout = serviceProvider.GetRequiredService<ICheckout>();
+            
+            // Act - Scan 4 A items and 3 B items
+            checkout.Scan("A");
+            checkout.Scan("A");
+            checkout.Scan("A");
+            checkout.Scan("A");
+            checkout.Scan("B");
+            checkout.Scan("B");
+            checkout.Scan("B");
+            var totalPrice = checkout.GetTotalPrice();
+            
+            // Assert
+            Assert.Equal(255, totalPrice); // 130 (3A) + 50 (1A) + 45 (2B) + 30 (1B) = 255
         }
     }
 }
