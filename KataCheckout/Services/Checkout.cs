@@ -41,7 +41,7 @@ namespace KataCheckout.Services;
             {
                 foreach (var rule in pricingRules)
                 {
-                    rules.Add(new UnitPricingRule(rule.Key, rule.Value));
+                    rules.Add(new PricingRule(rule.Key, rule.Value));
                 }
             }
             
@@ -55,10 +55,10 @@ namespace KataCheckout.Services;
         {
             var rules = new List<IPricingRule>
             {
-                new SpecialPricingRule("A", 50, 3, 130),
-                new SpecialPricingRule("B", 30, 2, 45),
-                new UnitPricingRule("C", 20),
-                new UnitPricingRule("D", 15)
+                new PricingRule("A", 50, 3, 130),
+                new PricingRule("B", 30, 2, 45),
+                new PricingRule("C", 20),
+                new PricingRule("D", 15)
             };
             
             return new Checkout(rules);

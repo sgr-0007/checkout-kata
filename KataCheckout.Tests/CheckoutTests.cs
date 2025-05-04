@@ -56,5 +56,31 @@ namespace KataCheckout.Tests
 
             Assert.Equal(130, totalPrice); // Special price: 3A for 130
         }
+        [Fact]
+        public void WhenTwoItemsBScanned_SpecialPriceApplied()
+        {
+            var checkout = Checkout.CreateWithSpecialOffers();
+
+            checkout.Scan("B");
+            checkout.Scan("B");
+            var totalPrice = checkout.GetTotalPrice();
+
+            Assert.Equal(45, totalPrice); // Special price: 2B for 45
+        }
+
+        [Fact]
+        public void WhenMixedItemsWithSpecialOffersScanned_CorrectTotalPriceCalculated()
+        {
+            var checkout = Checkout.CreateWithSpecialOffers();
+            checkout.Scan("A");
+            checkout.Scan("B");
+            checkout.Scan("A");
+            checkout.Scan("B");
+            checkout.Scan("A");
+            checkout.Scan("C");
+            checkout.Scan("D");
+            var totalPrice = checkout.GetTotalPrice();
+            Assert.Equal(210, totalPrice);
+        }
     }
 }
